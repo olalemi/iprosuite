@@ -70,7 +70,7 @@ const LaunchDetailPage = () => {
       className="bg-center min-h-screen flex flex-col items-center justify-center p-16"
     >
       <div className="text-white text-center text-3xl sm:text-xl md:text-4xl p-8">
-        {launchData?.missionName}  Data
+        {launchData?.missionName} Launch Data
       </div>
       <div className="overflow-x-auto overflow-y-auto">
         <table className=" text-white overflow-x-auto overflow-y-auto ">
