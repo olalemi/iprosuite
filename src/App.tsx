@@ -11,11 +11,11 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route index={true} path="home" element={<HomePage />} />
+      <Route index={true}  element={<HomePage />} />
       <Route path="/launch/:id" element={<LaunchPage />} />
     </Route>,
   ),
-);
+);a
 function App() {
   return (
     <>
