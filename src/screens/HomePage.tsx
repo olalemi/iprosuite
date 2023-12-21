@@ -72,14 +72,14 @@ const HomePage: React.FC = () => {
       style={{ backgroundImage: `url(${bg})` }}
       className="bg-center min-h-screen flex flex-col items-center justify-center p-16"
     >
-      <div className="text-white text-4xl p-8">SpaceX Launches</div>
+      <div className="text-white md:text-4xl p-8 text-center  sm:text-2xl">SpaceX Launches</div>
       <div className="overflow-x-auto overflow-y-auto">
         <table className="w-full text-white">
           <thead className="bg-gray-700">
             <tr>
-              <th className="px-4 py-2 text-center">Mission Name</th>
-              <th className="px-4 py-2 text-center">Launch Date</th>
-              <th className="px-4 py-2 text-center">Launch Status</th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm ">Mission Name</th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm">Launch Date</th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm">Launch Status</th>
             </tr>
           </thead>
           <tbody>
