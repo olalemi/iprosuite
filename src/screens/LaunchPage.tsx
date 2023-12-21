@@ -69,7 +69,7 @@ const LaunchDetailPage = () => {
       style={{ backgroundImage: `url(${bg})` }}
       className="bg-center min-h-screen flex flex-col items-center justify-center p-16"
     >
-      <div className="text-white text-center text-3xl sm:text-xl md:text-4xl p-8">
+      <div className="text-white text-center text-3xl sm:text-base md:text-4xl p-8">
         {launchData?.missionName} Launch Data
       </div>
       <div className="overflow-x-auto overflow-y-auto">
@@ -83,7 +83,9 @@ const LaunchDetailPage = () => {
 
           <tbody>
             <tr className="border border-gray-200">
-              <th className="border border-gray-200 sm:text-sm ">launch Date </th>
+              <th className="border border-gray-200 sm:text-sm ">
+                Launch Date{" "}
+              </th>
               {launchData && (
                 <td className="text-center px-2 py-2">
                   {new Date(launchData.launchDate).toDateString()}
@@ -91,7 +93,9 @@ const LaunchDetailPage = () => {
               )}
             </tr>
             <tr className="border border-gray-200 p-2">
-              <th className="border border-gray-200 sm:text-sm ">Launch status</th>
+              <th className="border border-gray-200 sm:text-sm ">
+                Launch status
+              </th>
 
               <td className="text-center px-2 py-2 sm:text-sm ">
                 {launchData?.status ? (
@@ -121,7 +125,9 @@ const LaunchDetailPage = () => {
               </td>
             </tr>
             <tr className="border border-gray-200 p-2">
-              <th className="border border-gray-200 p-2 sm:text-sm ">Mission patch</th>
+              <th className="border border-gray-200 p-2 sm:text-sm ">
+                Mission patch
+              </th>
               <td className="text-center px-2 py-2">
                 {launchData?.patch && (
                   <a
@@ -138,7 +144,9 @@ const LaunchDetailPage = () => {
               </td>
             </tr>
             <tr className="border border-gray-200">
-              <th className="border  border-gray-200 p-2 sm:text-sm">Webcast</th>
+              <th className="border  border-gray-200 p-2 sm:text-sm">
+                Webcast
+              </th>
 
               <td className="text-center px-2 py-2">
                 {launchData?.webcast && (
@@ -156,7 +164,9 @@ const LaunchDetailPage = () => {
               </td>
             </tr>
             <tr className="border border-gray-200">
-              <th className="border border-gray-200 p-2 sm:text-sm">Article </th>
+              <th className="border border-gray-200 p-2 sm:text-sm">
+                Article{" "}
+              </th>
               <td className="text-center px-2 py-2">
                 {launchData?.artice && (
                   <a
@@ -173,18 +183,24 @@ const LaunchDetailPage = () => {
               </td>
             </tr>
             <tr className="border border-gray-200">
-              <th className="border border-gray-200 p-2 sm:text-sm">Rocket used</th>
+              <th className="border border-gray-200 p-2 sm:text-sm">
+                Rocket used
+              </th>
               <td className="text-left px-2 py-2">{launchData?.rocketId}</td>
             </tr>
             <tr className="border border-gray-200">
-              <th className="border border-gray-200 p-2 sm:text-sm ">Reason for failure</th>
+              <th className="border border-gray-200 p-2 sm:text-sm ">
+                Reason for failure
+              </th>
               <td className="text-left px-2 py-2">
                 {launchData?.failureReason}
               </td>
             </tr>
 
             <tr className="border border-gray-200">
-              <th className="border border-gray-200 p-2 sm:text-sm ">Launch details</th>
+              <th className="border border-gray-200 p-2 sm:text-sm ">
+                Launch details
+              </th>
               <td className="text-left px-2 py-2 w-80 overflow-x-auto overflow-y-auto ">
                 {launchData?.launchDetails}
               </td>

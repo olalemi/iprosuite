@@ -27,7 +27,7 @@ const RootLayout = () => {
           <div className="flex justify-between h-16 items-center">
             {/* Logo */}
             <div className="flex-shrink-0 text-white md:text-3xl sm:text-xl ">
-              <h3>SpaceX</h3>
+              <h3>SpaceX Launches</h3>
             </div>
 
             {/* Desktop Menu */}

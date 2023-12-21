@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import bg from "../assets/pattern-dark.png";
 import { getAllLaunches } from "../api/LaunchService";
 import { useNavigate } from "react-router-dom";
-
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // TypeScript interface for launch data
 interface LaunchData {
   missionName: string;
@@ -14,18 +15,18 @@ interface LaunchData {
 const HomePage: React.FC = () => {
   const [data, setData] = useState<LaunchData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllLaunches();
 
-        if (!response){
-            return
+        if (!response) {
+          return;
         }
 
-        // Limit the data to the first 15 launches
+        // Limit the data to the first 30 launches
         const slicedResponse = response.slice(0, 30).map((launch: any) => ({
           missionName: launch.name,
           launchDate: launch.date_utc,
@@ -37,24 +38,34 @@ const HomePage: React.FC = () => {
           ),
         }));
         setIsLoading(false);
-     
+
         setData(slicedResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
+    if (sortOrder === "recent") {
+      const sortedData = [...data].sort((a, b) => {
+        return (
+          new Date(b.launchDate).getTime() - new Date(a.launchDate).getTime()
+        );
+      });
+      setData(sortedData);
+    }
+
     fetchData();
-  }, []);
+  }, [sortOrder, data]);
 
   const navigate = useNavigate();
 
-  const handleLaunchClick = (launchId:string) => {
-    // Perform actions with the launchId, e.g., navigate to a detail page
-    console.log("Launch ID:", launchId); // For testing
+  const handleLaunchClick = (launchId: string) => {
     navigate(`/launch/${launchId}`);
   };
-  
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(event.target.value);
+  };
 
   if (isLoading) {
     return (
@@ -65,21 +76,42 @@ const HomePage: React.FC = () => {
       </div>
     );
   }
-  
 
   return (
     <div
       style={{ backgroundImage: `url(${bg})` }}
-      className="bg-center min-h-screen flex flex-col items-center justify-center p-16"
+      className="bg-center min-h-screen p-16 flex flex-col sm:items-center md:items-stretch "
     >
-      <div className="text-white md:text-4xl p-8 text-center  sm:text-2xl">SpaceX Launches</div>
-      <div className="overflow-x-auto overflow-y-auto">
-        <table className="w-full text-white">
+      <div className="border-gray-200 mt-8 flex gap-4 justify-end  text-white">
+        <div className="flex gap-2 border rounded-md border-gray-200 px-4 py-2">
+          <FontAwesomeIcon icon={faFilter} className=" mt-1 text-white" />
+          <p className="font-semibold">Filter</p>
+        </div>
+        <div className="flex items-center border bg-transparent px-4 py-2">
+          <p className="mr-2">Sort By</p>
+          <select className=" text-black" onChange={handleSortChange}>
+            <option value="default">Default</option>
+            <option value="recent">Most Recent</option>
+          </select>
+        </div>
+      </div>
+
+      {/* <div className="text-white md:text-4xl p-8 text-center  sm:text-xl">
+        SpaceX Launches
+      </div> */}
+      <div className="overflow-x-auto overflow-y-auto  mt-8 ">
+        <table className="w-full text-white   ">
           <thead className="bg-gray-700">
             <tr>
-              <th className="px-4 py-2 text-center md:text-base sm:text-sm ">Mission Name</th>
-              <th className="px-4 py-2 text-center md:text-base sm:text-sm">Launch Date</th>
-              <th className="px-4 py-2 text-center md:text-base sm:text-sm">Launch Status</th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm">
+                Mission Name
+              </th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm">
+                Launch Date
+              </th>
+              <th className="px-4 py-2 text-center md:text-base sm:text-sm">
+                Launch Status
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -88,16 +120,17 @@ const HomePage: React.FC = () => {
                 <td className="text-center px-2 py-2">
                   {" "}
                   <button
-                      onClick={() => handleLaunchClick(launch.launchId)}
+                    onClick={() => handleLaunchClick(launch.launchId)}
                     className="bg-blue-500 rounded p-2 w-32 h-10
                    hover:bg-blue-700 text-white font-bold py-2 px-4 text-center truncate"
                   >
                     {launch.missionName}{" "}
                   </button>{" "}
                 </td>
-                <td className="text-center px-2 py-2">{new Date(launch.launchDate).toDateString()}</td>
+                <td className="text-center px-2 py-2">
+                  {new Date(launch.launchDate).toDateString()}
+                </td>
                 <td className="text-center px-2 py-2">{launch.launchStatus}</td>
-             
               </tr>
             ))}
           </tbody>
