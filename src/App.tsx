@@ -15,7 +15,7 @@ const router = createBrowserRouter(
       <Route path="/launch/:id" element={<LaunchPage />} />
     </Route>,
   ),
-);a
+);
 function App() {
   return (
     <>
