@@ -26,14 +26,14 @@ const RootLayout = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Logo */}
-            <div className="flex-shrink-0 text-white">
+            <div className="flex-shrink-0 text-white md:text-3xl sm:text-xl ">
               <h3>SpaceX</h3>
             </div>
 
             {/* Desktop Menu */}
             <div className="block">
               <NavLink
-                to="/home"
+                to="/"
                 className=" z-40  px-3 py-2 rounded-md text-sm font-medium"
               >
                 <FontAwesomeIcon
