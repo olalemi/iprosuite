@@ -1,25 +1,36 @@
 import axios from "axios";
 
 const getBaseUrl = () => {
-  return ` https://api.spacexdata.com/v5/launches`;
+  return ` https://api.spacexdata.com${route}`;
 };
-
+const route = "/v5";
 const apiClient = axios.create({
   baseURL: getBaseUrl(),
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
 
- async function createEmail(email: string) {
+async function getAllLaunches() {
   try {
-    const data = { email: email };
-    const response = await apiClient.post("/email", data);
+    const response = await apiClient.get("/launches");
+
     return response.data;
   } catch (error) {
-    console.error("Error posting email:", error);
+    console.error("Error getting Launches:", error);
     throw error;
   }
 }
 
-export {  createEmail}
+async function getALaunch(id: string) {
+  try {
+    const response = await apiClient.get(`/launches/${id}`);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching launch details:", error);
+    throw error;
+  }
+}
+
+export { getALaunch, getAllLaunches };

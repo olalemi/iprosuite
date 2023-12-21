@@ -1,15 +1,29 @@
+import RootLayout from "./layouts/RootLayout.tsx";
+import LaunchPage from "./screens/LaunchPage.tsx";
+import HomePage from "./screens/HomePage.tsx";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 
-
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index={true} path="home" element={<HomePage />} />
+      <Route path="/launch/:id" element={<LaunchPage />} />
+    </Route>,
+  ),
+);
 function App() {
-
   return (
     <>
       <div>
-       <p>app page</p>
+        <RouterProvider router={router} />
       </div>
-     
     </>
-  )
+  );
 }
 
-export default App
+export default App;
