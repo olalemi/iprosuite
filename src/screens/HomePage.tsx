@@ -90,7 +90,7 @@ const HomePage: React.FC = () => {
         <div className="flex items-center border rounded-md bg-transparent px-4 py-2">
           <p className="mr-2 font-semibold md:text-base sm:text-sm">Sort By</p>
           <select
-            className=" text-black sm:w-4 md:w-28"
+            className=" text-black sm:w-5 md:w-28"
             onChange={handleSortChange}
           >
             <option value="default">Default</option>
@@ -99,9 +99,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* <div className="text-white md:text-4xl p-8 text-center  sm:text-xl">
-        SpaceX Launches
-      </div> */}
+    
       <div className="overflow-x-auto overflow-y-auto  mt-8 ">
         <table className="w-full text-white   ">
           <thead className="bg-gray-700">
