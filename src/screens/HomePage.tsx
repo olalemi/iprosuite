@@ -87,9 +87,12 @@ const HomePage: React.FC = () => {
           <FontAwesomeIcon icon={faFilter} className=" mt-1 text-white" />
           <p className="font-semibold">Filter</p>
         </div>
-        <div className="flex items-center border bg-transparent px-4 py-2">
-          <p className="mr-2">Sort By</p>
-          <select className=" text-black" onChange={handleSortChange}>
+        <div className="flex items-center border rounded-md bg-transparent px-4 py-2">
+          <p className="mr-2 font-semibold md:text-base sm:text-sm">Sort By</p>
+          <select
+            className=" text-black sm:w-4 md:w-28"
+            onChange={handleSortChange}
+          >
             <option value="default">Default</option>
             <option value="recent">Most Recent</option>
           </select>
