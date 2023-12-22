@@ -117,7 +117,7 @@ const HomePage: React.FC = () => {
             Previous
           </button>
 
-          <span className=" md:text-base sm:text-sm  text-white font-semibold">
+          <span className=" md:text-base sm:text-sm  sm:hidden md:inline text-white font-semibold">
             Page {currentPage} of {totalPages}
           </span>
 
