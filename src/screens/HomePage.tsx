@@ -1,61 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import bg from "../assets/pattern-dark.png";
-import { getAllLaunches } from "../api/LaunchService";
 import { useNavigate } from "react-router-dom";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// TypeScript interface for launch data
-interface LaunchData {
-  missionName: string;
-  launchDate: string;
-  launchStatus: string;
-  launchId: string;
-}
+import { UserContext } from "../utility/UserProvider";
 
 const HomePage: React.FC = () => {
-  const [data, setData] = useState<LaunchData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sortOrder, setSortOrder] = useState<string>("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getAllLaunches();
-
-        if (!response) {
-          return;
-        }
-
-        // Limit the data to the first 30 launches
-        const slicedResponse = response.slice(0, 30).map((launch: any) => ({
-          missionName: launch.name,
-          launchDate: launch.date_utc,
-          launchId: launch.id,
-          launchStatus: launch.success ? (
-            <p className="text-green-500 font-bold">Success</p>
-          ) : (
-            <p className="text-red-500 font-bold">Failed</p>
-          ),
-        }));
-        setIsLoading(false);
-
-        setData(slicedResponse);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if (sortOrder === "recent") {
-      const sortedData = [...data].sort((a, b) => {
-        return (
-          new Date(b.launchDate).getTime() - new Date(a.launchDate).getTime()
-        );
-      });
-      setData(sortedData);
-    }
-
-    fetchData();
-  }, [sortOrder, data]);
+  const {
+    data,
+    isLoading,
+    setSortOrder,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+  } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -66,6 +24,9 @@ const HomePage: React.FC = () => {
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(event.target.value);
   };
+  
+  console.log("isoading",isLoading);
+  
 
   if (isLoading) {
     return (
@@ -79,8 +40,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${bg})` }}
-      className="bg-center min-h-screen p-16 flex flex-col sm:items-center md:items-stretch "
+      style={{ backgroundImage: `url(${bg})`  }}
+      className="bg-center min-h-screen  p-16 flex flex-col sm:items-center md:items-stretch  "
     >
       <div className="border-gray-200 mt-8 flex gap-4 justify-end  text-white">
         <div className="flex gap-2 border rounded-md border-gray-200 px-4 py-2">
@@ -90,7 +51,7 @@ const HomePage: React.FC = () => {
         <div className="flex items-center border rounded-md bg-transparent px-4 py-2">
           <p className="mr-2 font-semibold md:text-base sm:text-sm">Sort By</p>
           <select
-            className=" text-black sm:w-5 md:w-28"
+            className=" text-black sm:w-5  md:w-28"
             onChange={handleSortChange}
           >
             <option value="default">Default</option>
@@ -99,7 +60,6 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-    
       <div className="overflow-x-auto overflow-y-auto  mt-8 ">
         <table className="w-full text-white   ">
           <thead className="bg-gray-700">
@@ -116,26 +76,69 @@ const HomePage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((launch, index) => (
-              <tr key={index} className="border border-gray-200">
-                <td className="text-center px-2 py-2">
-                  {" "}
-                  <button
-                    onClick={() => handleLaunchClick(launch.launchId)}
-                    className="bg-blue-500 rounded p-2 w-32 h-10
+            {data &&
+              data.map((launch, index) => (
+                <tr key={index} className="border border-gray-200">
+                  <td className="text-center px-2 py-2">
+                    {" "}
+                    <button
+                      onClick={() => handleLaunchClick(launch.launchId)}
+                      className="bg-blue-500 rounded p-2 w-32 h-10
                    hover:bg-blue-700 text-white font-bold py-2 px-4 text-center truncate"
-                  >
-                    {launch.missionName}{" "}
-                  </button>{" "}
-                </td>
-                <td className="text-center px-2 py-2">
-                  {new Date(launch.launchDate).toDateString()}
-                </td>
-                <td className="text-center px-2 py-2">{launch.launchStatus}</td>
-              </tr>
-            ))}
+                    >
+                      {launch.missionName}{" "}
+                    </button>{" "}
+                  </td>
+                  <td className="text-center px-2 py-2">
+                    {new Date(launch.launchDate).toDateString()}
+                  </td>
+                  <td className="text-center px-2 py-2">
+                    {launch.launchStatus}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
+
+        <div className="flex items-center space-x-2 mt-4 ">
+          <button
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+            className="bg-blue-500 md:text-base sm:text-xs text-white font-bold py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            First
+          </button>
+
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+            disabled={currentPage === 1}
+            className="bg-blue-500 text-white  md:text-base sm:text-xs font-bold py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            Previous
+          </button>
+
+          <span className=" md:text-base sm:text-sm  text-white font-semibold">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+            }
+            disabled={currentPage === totalPages}
+            className="bg-blue-500 md:text-base sm:text-xs text-white font-bold py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            Next
+          </button>
+
+          <button
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+            className="bg-blue-500 md:text-base sm:text-xs text-white font-bold py-2 px-4 rounded  hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            Last
+          </button>
+        </div>
       </div>
     </div>
   );

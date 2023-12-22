@@ -30,21 +30,30 @@ const LaunchDetailPage = () => {
       if (id) {
         try {
           const response = await getALaunch(id);
-          const mappedData = {
+          console.log("launch page", response);
+
+          const mappedData: LaunchData = {
             missionName: response.name,
             launchDate: response.date_utc,
-            status: response.success,
+            status: response.success ,
             wiki: response.links.wikipedia,
-            patch: response.links.patch.small,
-            webcast: response.links.webcast,
+            patch: response.links.patch.small ,
+            webcast: response.links.webcast ,
             artice: response.links.article,
             rocketId: response.rocket,
-            failureReason: response.failures[0].reason,
-            launchDetails: response.details,
+            failureReason:
+              response.failures.length > 0
+                ? response.failures[0].reason
+                : "N/A",
+            launchDetails: response.details ?? "No details available",
           };
+
+          console.log("response status",response.success)
+          console.log("response status",response)
+
+          console.log("response name",response.name)
           setLaunchData(mappedData);
           setIsLoading(false);
-          console.log(mappedData.missionName);
         } catch (error) {
           console.error("Error fetching launch details:", error);
         }
@@ -67,7 +76,7 @@ const LaunchDetailPage = () => {
   return (
     <div
       style={{ backgroundImage: `url(${bg})` }}
-      className="bg-center min-h-screen flex flex-col items-center justify-center p-16"
+      className="bg-center min-h-screen flex flex-col items-center justify-center p-16 "
     >
       <div className="text-white text-center text-3xl sm:text-base md:text-4xl p-8">
         {launchData?.missionName} Launch Data
@@ -98,7 +107,8 @@ const LaunchDetailPage = () => {
               </th>
 
               <td className="text-center px-2 py-2 sm:text-sm ">
-                {launchData?.status ? (
+                {launchData?.status ? 
+                (
                   <p className="text-green-500 font-bold">Success</p>
                 ) : (
                   <p className="text-red-500 font-bold">Failed</p>
