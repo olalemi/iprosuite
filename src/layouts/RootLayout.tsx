@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, Outlet } from "react-router-dom";
+import bg from "../assets/pattern-dark.png";
 
 const RootLayout = () => {
   const [shadow, setShadow] = useState(false);
@@ -17,7 +18,7 @@ const RootLayout = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ backgroundImage: `url(${bg})` }} className="  min-h-screen  ">
       <header
         className={`bg-blue-500 ${shadow ? "shadow-md" : ""} fixed w-full z-10`}
       >
@@ -46,7 +47,7 @@ const RootLayout = () => {
       </header>
 
       <Outlet />
-    </>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getALaunch } from "../api/LaunchService";
-import bg from "../assets/pattern-dark.png";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LaunchData } from "../interfaces/LaunchPage/ILaunchPage";
@@ -21,11 +20,11 @@ const LaunchDetailPage = () => {
           const mappedData: LaunchData = {
             missionName: response.name,
             launchDate: response.date_utc,
-            status: response.success,
-            wiki: response.links.wikipedia,
-            patch: response.links.patch.small,
-            webcast: response.links.webcast,
-            artice: response.links.article,
+            status: response.success ,
+            wiki: response.links.wikipedia ?? "N/A",
+            patch: response.links.patch.small?? "N/A",
+            webcast: response.links.webcast ?? "N/A",
+            artice: response.links.article ?? "N/A",
             rocketId: response.rocket,
             failureReason:
               response.failures.length > 0
@@ -48,7 +47,7 @@ const LaunchDetailPage = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <p className="text-black text-center text-lg sm:text-md md:text-xl font-bold mt-96">
+        <p className="text-white text-center text-lg sm:text-md md:text-xl font-bold mt-96">
           Loading...
         </p>
       </div>
@@ -56,10 +55,7 @@ const LaunchDetailPage = () => {
   }
 
   return (
-    <div
-      style={{ backgroundImage: `url(${bg})` }}
-      className="bg-center min-h-screen flex flex-col items-center justify-center p-16 "
-    >
+    <div className=" min-h-screen flex flex-col items-center justify-center p-16 ">
       <div className="text-white text-center text-3xl sm:text-base md:text-4xl p-8">
         {launchData?.missionName} Launch Data
       </div>

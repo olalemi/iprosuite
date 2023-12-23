@@ -2,7 +2,7 @@ import RootLayout from "./layouts/RootLayout.tsx";
 import LaunchPage from "./screens/LaunchPage.tsx";
 import HomePage from "./screens/HomePage.tsx";
 import UserProvider from "./utility/UserProvider";
-
+import NotFound from "./screens/NotFound";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,6 +15,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index={true} element={<HomePage />} />
       <Route path="/launch/:id" element={<LaunchPage />} />
+      <Route path="/launch/N/A" element={<NotFound />} />
     </Route>,
   ),
 );

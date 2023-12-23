@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getAllLaunches } from "../api/LaunchService";
-
 import {
   FilterState,
   LaunchData,
@@ -117,7 +116,6 @@ const UserProvider = ({ children }: Props) => {
         console.error("Error fetching data:", error);
       }
     };
-    
 
     fetchData();
   }, [sortOrder, currentPage, totalPages, filter]);

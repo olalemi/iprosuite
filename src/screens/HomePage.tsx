@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import bg from "../assets/pattern-dark.png";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../utility/UserProvider";
 import Modal from "../components/Modal";
@@ -26,11 +25,10 @@ const HomePage: React.FC = () => {
     setSortOrder(event.target.value);
   };
 
-
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <p className="text-black text-center text-lg md:text-xl font-bold mt-96">
+        <p className="text-white text-center text-lg md:text-xl font-bold mt-96">
           Loading...
         </p>
       </div>
@@ -38,10 +36,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div
-      style={{ backgroundImage: `url(${bg})` }}
-      className="bg-center min-h-screen  p-16 flex flex-col sm:items-center md:items-stretch  "
-    >
+    <div className="   p-16 flex flex-col sm:items-center md:items-stretch  ">
       <div className="border-gray-200 mt-8 flex gap-4 justify-end  text-white">
         <div
           className="flex gap-2 border rounded-md border-gray-200 hover:border-blue-500 hover:bg-white hover:text-blue-500 px-4 py-2"
