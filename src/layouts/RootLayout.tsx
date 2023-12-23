@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome,  } from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   const [shadow, setShadow] = useState(false);
-
- 
 
   // Handle scroll to add box shadow
   useEffect(() => {
@@ -25,7 +23,8 @@ const RootLayout = () => {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            {/* Logo */}
+            {/* 
+            o */}
             <div className="flex-shrink-0 text-white md:text-3xl sm:text-xl ">
               <h3>SpaceX Launches</h3>
             </div>

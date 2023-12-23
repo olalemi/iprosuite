@@ -26,7 +26,6 @@ const HomePage: React.FC = () => {
     setSortOrder(event.target.value);
   };
 
-  console.log("isoading", isLoading);
 
   if (isLoading) {
     return (

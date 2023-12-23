@@ -4,20 +4,7 @@ import { getALaunch } from "../api/LaunchService";
 import bg from "../assets/pattern-dark.png";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Define the TypeScript interface for launch data
-interface LaunchData {
-  missionName: string;
-  launchDate: string;
-  status: string;
-  wiki: string;
-  patch: string;
-  webcast: string;
-  artice: string;
-  rocketId: string;
-  failureReason: string;
-  launchDetails: string;
-}
+import { LaunchData } from "../interfaces/LaunchPage/ILaunchPage";
 
 const LaunchDetailPage = () => {
   const [launchData, setLaunchData] = useState<LaunchData | null>(null);
@@ -30,15 +17,14 @@ const LaunchDetailPage = () => {
       if (id) {
         try {
           const response = await getALaunch(id);
-          console.log("launch page", response);
 
           const mappedData: LaunchData = {
             missionName: response.name,
             launchDate: response.date_utc,
-            status: response.success ,
+            status: response.success,
             wiki: response.links.wikipedia,
-            patch: response.links.patch.small ,
-            webcast: response.links.webcast ,
+            patch: response.links.patch.small,
+            webcast: response.links.webcast,
             artice: response.links.article,
             rocketId: response.rocket,
             failureReason:
@@ -48,10 +34,6 @@ const LaunchDetailPage = () => {
             launchDetails: response.details ?? "No details available",
           };
 
-          console.log("response status",response.success)
-          console.log("response status",response)
-
-          console.log("response name",response.name)
           setLaunchData(mappedData);
           setIsLoading(false);
         } catch (error) {
@@ -107,8 +89,7 @@ const LaunchDetailPage = () => {
               </th>
 
               <td className="text-center px-2 py-2 sm:text-sm ">
-                {launchData?.status ? 
-                (
+                {launchData?.status ? (
                   <p className="text-green-500 font-bold">Success</p>
                 ) : (
                   <p className="text-red-500 font-bold">Failed</p>
