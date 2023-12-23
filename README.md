@@ -24,10 +24,13 @@ Tailwind CSS used for styling
 
 # Functionality and Design choices:
 
-Chose Context API over Redux because Redux is more suited for larger applications, for this use case context API is sufficient
-Context API was used to manage application-wide state like Launch data, loading status, and user settings (like filters and pagination),
-Pagination was used to efficiently manage the data from the getAllLauches endpoint into subsets of data for scalability, reduced loading time and Improved UX
-React router used for the dynamic routing of the individual launch page, RootLayout and  for Managing the nested routes
+1. Chose Context API over Redux because Redux is more suited for larger applications, for this use case context API is sufficient
+
+2. Context API was used to manage application-wide state like Launch data, loading status, and user settings (like filters and pagination),
+
+3. Pagination was used to efficiently manage the data from the getAllLauches endpoint into subsets of data for scalability, reduced loading time and Improved UX
+
+4. React router used for the dynamic routing of the individual launch page, RootLayout and  for Managing the nested routes
 
 
 
