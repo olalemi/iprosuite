@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import bg from "../assets/pattern-dark.png";
 import { useNavigate } from "react-router-dom";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserContext } from "../utility/UserProvider";
+import Modal from "../components/Modal";
 
 const HomePage: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const {
     data,
     isLoading,
@@ -24,9 +25,8 @@ const HomePage: React.FC = () => {
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(event.target.value);
   };
-  
-  console.log("isoading",isLoading);
-  
+
+  console.log("isoading", isLoading);
 
   if (isLoading) {
     return (
@@ -40,18 +40,20 @@ const HomePage: React.FC = () => {
 
   return (
     <div
-      style={{ backgroundImage: `url(${bg})`  }}
+      style={{ backgroundImage: `url(${bg})` }}
       className="bg-center min-h-screen  p-16 flex flex-col sm:items-center md:items-stretch  "
     >
       <div className="border-gray-200 mt-8 flex gap-4 justify-end  text-white">
-        <div className="flex gap-2 border rounded-md border-gray-200 px-4 py-2">
-          <FontAwesomeIcon icon={faFilter} className=" mt-1 text-white" />
+        <div
+          className="flex gap-2 border rounded-md border-gray-200 hover:border-blue-500 hover:bg-white hover:text-blue-500 px-4 py-2"
+          onClick={() => setShowModal(true)}
+        >
           <p className="font-semibold">Filter</p>
         </div>
         <div className="flex items-center border rounded-md bg-transparent px-4 py-2">
           <p className="mr-2 font-semibold md:text-base sm:text-sm">Sort By</p>
           <select
-            className=" text-black sm:w-5  md:w-28"
+            className=" text-black sm:w-4 md:w-28"
             onChange={handleSortChange}
           >
             <option value="default">Default</option>
@@ -139,6 +141,7 @@ const HomePage: React.FC = () => {
             Last
           </button>
         </div>
+        <Modal showModal={showModal} setShowModal={setShowModal} />
       </div>
     </div>
   );
